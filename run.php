@@ -1,18 +1,27 @@
 <?php
 
-use App\Application;
-use Doctrine\ORM\EntityManager;
+declare(strict_types=1);
+
+use App\Application\Kernel;
 use GuzzleHttp\Psr7\Message;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/** @var EntityManager $entityManager */
-$entityManager = require __DIR__ . '/src/bootstrap.php';
+/** @var ContainerBuilder $container */
+$container = require __DIR__ . '/bootstrap.php';
 
-$request = new Request('POST', new Uri('http://localhost/pack'), ['Content-Type' => 'application/json'], $argv[1]);
+/** @var Kernel $kernel */
+$kernel = $container->get(Kernel::class);
 
-$application = new Application($entityManager);
-$response = $application->run($request);
+$headers = ['Content-Type' => 'application/json'];
+if (isset($_ENV['API_KEY'])) {
+    $headers['X-Api-Key'] = $_ENV['API_KEY'];
+}
+
+$request = new Request('POST', new Uri('http://localhost/pack'), $headers, $argv[1]);
+
+$response = $kernel->run($request);
 
 echo "<<< In:\n" . Message::toString($request) . "\n\n";
 echo ">>> Out:\n" . Message::toString($response) . "\n\n";

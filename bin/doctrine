@@ -1,10 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-$entityManager = require __DIR__ . '/../src/bootstrap.php';
+/** @var ContainerBuilder $container */
+$container = require __DIR__ . '/../bootstrap.php';
+
+$entityManager = $container->get(EntityManagerInterface::class);
 
 ConsoleRunner::run(
     new SingleManagerProvider($entityManager)

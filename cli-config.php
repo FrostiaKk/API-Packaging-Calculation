@@ -1,8 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Dotenv\Dotenv;
 
-$entityManager = require_once __DIR__ . '/src/bootstrap.php';
+require __DIR__ . '/vendor/autoload.php';
 
-return ConsoleRunner::createHelperSet($entityManager); // needed by vendor/bin/doctrine
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
+$containerFactory = require __DIR__ . '/config/container.php';
+$container = $containerFactory();
+
+return ConsoleRunner::createHelperSet($container->get(EntityManagerInterface::class));

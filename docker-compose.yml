@@ -15,9 +15,11 @@ services:
             - shipmonk-packing-mysql
         build: .
         working_dir: /app
-        user: ${UID:-1000}:${GID:-1000}
         volumes:
-          - .:/app
+            - .:/app
+        ports:
+            - "8000:8000"
+        command: bash -c "composer install && php -S 0.0.0.0:8000 -t public"
 
     shipmonk-packing-adminer:
         depends_on:
