@@ -16,6 +16,9 @@ class Packaging
     #[ORM\GeneratedValue]
     private ?int $id = null;
 
+    #[ORM\Column(type: Types::STRING, length: 36, unique: true)]
+    private string $externalId;
+
     #[ORM\Column(type: Types::FLOAT)]
     private float $width;
 
@@ -28,8 +31,9 @@ class Packaging
     #[ORM\Column(type: Types::FLOAT)]
     private float $maxWeight;
 
-    public function __construct(float $width, float $height, float $length, float $maxWeight)
+    public function __construct(string $externalId, float $width, float $height, float $length, float $maxWeight)
     {
+        $this->externalId = $externalId;
         $this->width = $width;
         $this->height = $height;
         $this->length = $length;
@@ -39,6 +43,11 @@ class Packaging
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getExternalId(): string
+    {
+        return $this->externalId;
     }
 
     public function getWidth(): float
@@ -59,6 +68,11 @@ class Packaging
     public function getMaxWeight(): float
     {
         return $this->maxWeight;
+    }
+
+    public function setExternalId(string $externalId): void
+    {
+        $this->externalId = $externalId;
     }
 
     public function setWidth(float $width): void
@@ -85,6 +99,7 @@ class Packaging
     {
         return new Box(
             id: $this->id,
+            externalId: $this->externalId,
             width: $this->width,
             height: $this->height,
             length: $this->length,

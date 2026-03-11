@@ -17,7 +17,8 @@ final class RequestBodyParser
 
     /**
      * @template T of object
-     * @param string[] $requiredFields
+     * @param string[] $requiredNumericFields
+     * @param string[] $requiredStringFields
      * @param callable(array<string, mixed>): T $dtoFactory
      * @return T
      * @throws ValidationException
@@ -25,11 +26,12 @@ final class RequestBodyParser
      */
     public function parseAndValidate(
         RequestInterface $request,
-        array $requiredFields,
+        array $requiredNumericFields,
+        array $requiredStringFields,
         callable $dtoFactory,
     ): object {
         $data = $this->parseJson($request);
-        $this->checkRequiredNumericFields($data, $requiredFields);
+        $this->checkRequiredFields($data, $requiredNumericFields, $requiredStringFields);
 
         $dto = $dtoFactory($data);
 
@@ -59,17 +61,27 @@ final class RequestBodyParser
 
     /**
      * @param array<string, mixed> $data
-     * @param string[] $fields
+     * @param string[] $numericFields
+     * @param string[] $stringFields
      * @throws ValidationException
      */
-    private function checkRequiredNumericFields(array $data, array $fields): void
+    private function checkRequiredFields(array $data, array $numericFields, array $stringFields): void
     {
         $errors = [];
-        foreach ($fields as $field) {
+
+        foreach ($numericFields as $field) {
             if (!array_key_exists($field, $data)) {
                 $errors[$field] = ucfirst($field) . ' is required.';
             } elseif (!is_numeric($data[$field])) {
                 $errors[$field] = ucfirst($field) . ' must be a number.';
+            }
+        }
+
+        foreach ($stringFields as $field) {
+            if (!array_key_exists($field, $data)) {
+                $errors[$field] = ucfirst($field) . ' is required.';
+            } elseif (!is_string($data[$field])) {
+                $errors[$field] = ucfirst($field) . ' must be a string.';
             }
         }
 

@@ -43,8 +43,8 @@ final class ApiPackingCalculatorTest extends TestCase
     private function createBoxes(): array
     {
         return [
-            new Box(1, 5.0, 5.0, 5.0, 20.0),
-            new Box(2, 9.0, 9.0, 9.0, 30.0),
+            new Box(1, 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d', 5.0, 5.0, 5.0, 20.0),
+            new Box(2, 'b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 9.0, 9.0, 9.0, 30.0),
         ];
     }
 

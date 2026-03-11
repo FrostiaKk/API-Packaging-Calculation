@@ -38,7 +38,7 @@ final class PackingHandlerTest extends TestCase
     {
         $this->packingService->method('pack')
             ->willReturn(new PackingOutcome(
-                box: new Box(1, 5.0, 5.0, 5.0, 20.0),
+                box: new Box(1, 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d', 5.0, 5.0, 5.0, 20.0),
                 source: PackingSource::Api,
             ));
 

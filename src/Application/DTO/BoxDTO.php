@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Application\DTO;
 
+use App\Domain\Model\Box;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final readonly class BoxDTO
 {
     public function __construct(
+        #[Assert\NotBlank(message: 'External ID is required.')]
+        #[Assert\Type(type: 'string', message: 'External ID must be a string.')]
+        #[Assert\Uuid(message: 'External ID must be a valid UUID.')]
+        public string $externalId,
         #[Assert\NotNull(message: 'Width is required.')]
         #[Assert\Type(type: 'numeric', message: 'Width must be a number.')]
         #[Assert\Positive(message: 'Width must be positive.')]
@@ -30,5 +35,17 @@ final readonly class BoxDTO
         #[Assert\LessThanOrEqual(value: ValidationLimits::MAX_WEIGHT, message: 'Max weight must not exceed {{ compared_value }}.')]
         public float $maxWeight,
     ) {
+    }
+
+    public function toDomainModel(?int $id = null): Box
+    {
+        return new Box(
+            id: $id,
+            externalId: $this->externalId,
+            width: $this->width,
+            height: $this->height,
+            length: $this->length,
+            maxWeight: $this->maxWeight,
+        );
     }
 }

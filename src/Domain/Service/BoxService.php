@@ -27,9 +27,8 @@ final class BoxService implements BoxServiceInterface
         return $this->boxRepository->findById($id);
     }
 
-    public function create(float $width, float $height, float $length, float $maxWeight): Box
+    public function create(Box $box): Box
     {
-        $box = new Box(null, $width, $height, $length, $maxWeight);
         $created = $this->boxRepository->save($box);
 
         $this->packingResultRepository->purgeAll();
@@ -37,15 +36,14 @@ final class BoxService implements BoxServiceInterface
         return $created;
     }
 
-    public function update(int $id, float $width, float $height, float $length, float $maxWeight): ?Box
+    public function update(int $id, Box $box): ?Box
     {
         $existing = $this->boxRepository->findById($id);
         if ($existing === null) {
             return null;
         }
 
-        $updated = new Box($id, $width, $height, $length, $maxWeight);
-        $saved = $this->boxRepository->save($updated);
+        $saved = $this->boxRepository->save($box);
 
         $this->packingResultRepository->purgeAll();
 

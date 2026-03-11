@@ -12,12 +12,4 @@ final readonly class PackingOutcome
     ) {
     }
 
-    public function toArray(): array
-    {
-        return [
-            'box' => $this->box?->toArray(),
-            'packable' => $this->box !== null,
-            'source' => $this->source->value,
-        ];
-    }
 }

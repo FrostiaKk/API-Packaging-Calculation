@@ -9,6 +9,7 @@ use App\Application\Handler\HealthHandler;
 use App\Application\Handler\PackingHandler;
 use App\Application\Http\ResponseFactory;
 use App\Application\Middleware\ApiKeyAuthMiddleware;
+use App\Domain\Exception\DomainInvariantException;
 use App\Domain\Exception\NotPackableException;
 use App\Domain\Exception\ValidationException;
 use FastRoute\Dispatcher;
@@ -58,6 +59,11 @@ final class Kernel
                 'error' => 'validation_error',
                 'message' => $e->getMessage(),
                 'details' => $e->getErrors(),
+            ]);
+        } catch (DomainInvariantException $e) {
+            return $this->responseFactory->json(400, [
+                'error' => 'domain_error',
+                'message' => $e->getMessage(),
             ]);
         } catch (NotPackableException $e) {
             return $this->responseFactory->json(422, [

@@ -39,12 +39,13 @@ final class DoctrineBoxRepository implements BoxRepositoryInterface
             if ($entity === null) {
                 throw new \RuntimeException("Box with ID {$box->id} not found.");
             }
+            $entity->setExternalId($box->externalId);
             $entity->setWidth($box->width);
             $entity->setHeight($box->height);
             $entity->setLength($box->length);
             $entity->setMaxWeight($box->maxWeight);
         } else {
-            $entity = new Packaging($box->width, $box->height, $box->length, $box->maxWeight);
+            $entity = new Packaging($box->externalId, $box->width, $box->height, $box->length, $box->maxWeight);
             $this->entityManager->persist($entity);
         }
 

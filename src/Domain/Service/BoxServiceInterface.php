@@ -13,9 +13,9 @@ interface BoxServiceInterface
 
     public function getById(int $id): ?Box;
 
-    public function create(float $width, float $height, float $length, float $maxWeight): Box;
+    public function create(Box $box): Box;
 
-    public function update(int $id, float $width, float $height, float $length, float $maxWeight): ?Box;
+    public function update(int $id, Box $box): ?Box;
 
     public function delete(int $id): bool;
 }

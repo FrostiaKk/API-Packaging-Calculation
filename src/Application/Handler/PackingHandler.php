@@ -7,6 +7,7 @@ namespace App\Application\Handler;
 use App\Application\DTO\PackingRequestDTO;
 use App\Application\DTO\ProductDTO;
 use App\Application\Http\ResponseFactory;
+use App\Application\ReadModel\PackingOutcomeReadModel;
 use App\Application\Validation\RequestBodyParser;
 use App\Domain\Exception\ValidationException;
 use App\Domain\Service\PackingServiceInterface;
@@ -28,7 +29,7 @@ final class PackingHandler
         $domainInput = $packingRequest->toDomainInput();
         $outcome = $this->packingService->pack($domainInput);
 
-        return $this->responseFactory->json(200, $outcome->toArray());
+        return $this->responseFactory->json(200, PackingOutcomeReadModel::fromDomainModel($outcome)->toArray());
     }
 
     private function parseAndValidate(RequestInterface $request): PackingRequestDTO
@@ -36,6 +37,7 @@ final class PackingHandler
         /** @var PackingRequestDTO */
         return $this->requestBodyParser->parseAndValidate(
             $request,
+            [],
             [],
             fn(array $data) => $this->buildPackingRequest($data),
         );

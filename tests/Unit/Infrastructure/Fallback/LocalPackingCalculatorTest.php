@@ -26,9 +26,9 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 9.0, 9.0, 9.0, 30.0),   // large
-            new Box(2, 3.0, 3.0, 3.0, 10.0),     // smallest that fits
-            new Box(3, 5.0, 5.0, 5.0, 20.0),     // medium
+            new Box(1, '11111111-1111-4111-8111-111111111111', 9.0, 9.0, 9.0, 30.0),   // large
+            new Box(2, '22222222-2222-4222-8222-222222222222', 3.0, 3.0, 3.0, 10.0),     // smallest that fits
+            new Box(3, '33333333-3333-4333-8333-333333333333', 5.0, 5.0, 5.0, 20.0),     // medium
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
@@ -44,8 +44,8 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 3.0, 3.0, 3.0, 30.0),
-            new Box(2, 5.0, 5.0, 5.0, 30.0),
+            new Box(1, '11111111-1111-4111-8111-111111111111', 3.0, 3.0, 3.0, 30.0),
+            new Box(2, '22222222-2222-4222-8222-222222222222', 5.0, 5.0, 5.0, 30.0),
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
@@ -60,8 +60,8 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 5.0, 5.0, 5.0, 10.0),
-            new Box(2, 9.0, 9.0, 9.0, 30.0),
+            new Box(1, '11111111-1111-4111-8111-111111111111', 5.0, 5.0, 5.0, 10.0),
+            new Box(2, '22222222-2222-4222-8222-222222222222', 9.0, 9.0, 9.0, 30.0),
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
@@ -80,7 +80,7 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 4.0, 4.0, 4.0, 10.0), // volume 64, fits 54
+            new Box(1, '11111111-1111-4111-8111-111111111111', 4.0, 4.0, 4.0, 10.0), // volume 64, fits 54
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
@@ -97,7 +97,7 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 2.0, 2.0, 10.0, 10.0),
+            new Box(1, '11111111-1111-4111-8111-111111111111', 2.0, 2.0, 10.0, 10.0),
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
@@ -114,7 +114,7 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 3.0, 3.0, 3.0, 30.0),
+            new Box(1, '11111111-1111-4111-8111-111111111111', 3.0, 3.0, 3.0, 30.0),
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
@@ -141,8 +141,8 @@ final class LocalPackingCalculatorTest extends TestCase
         ]);
 
         $boxes = [
-            new Box(1, 5.0, 5.0, 5.0, 20.0),  // weight 25 > 20, too light
-            new Box(2, 5.0, 5.0, 5.0, 30.0),  // weight 25 <= 30, fits
+            new Box(1, '11111111-1111-4111-8111-111111111111', 5.0, 5.0, 5.0, 20.0),  // weight 25 > 20, too light
+            new Box(2, '22222222-2222-4222-8222-222222222222', 5.0, 5.0, 5.0, 30.0),  // weight 25 <= 30, fits
         ];
 
         $result = $this->calculator->calculate($input, $boxes);
